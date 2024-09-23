@@ -17,10 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/planets")
 public class PlanetController {
 
+
     @Autowired
     private PlanetService planetService;
-    
-    @PostMapping("path")
+
+    @PostMapping
     public ResponseEntity<Planet> create(@RequestBody Planet planet) {
         Planet planetCreated = planetService.create(planet);
         return ResponseEntity.status(HttpStatus.CREATED).body(planetCreated); 
