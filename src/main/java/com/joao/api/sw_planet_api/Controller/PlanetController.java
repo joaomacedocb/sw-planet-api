@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/planets")
 public class PlanetController {
 
-
     @Autowired
     private PlanetService planetService;
 
