@@ -1,26 +1,40 @@
 package com.joao.api.sw_planet_api.Service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.joao.Service.PlanetService;
 import com.joao.api.sw_planet_api.Domain.Planet;
+import com.joao.api.sw_planet_api.Repository.PlanetRepository;
 
 import static com.joao.api.sw_planet_api.Common.PlanetConstants.PLANET;
 
-@SpringBootTest(classes = PlanetService.class)
+@ExtendWith(MockitoExtension.class)
 public class PlanetServiceTest {
 
-    @Autowired
+    @InjectMocks
     private PlanetService planetService;
+
+    @Mock
+    private PlanetRepository planetRepository;
 
     //operacao_estado_returno
     @Test
     public void CreatePlanet_WithValidData_ReturnsPlanet() {
+
+        //Arrange
+        when(planetRepository.save(PLANET)).thenReturn(PLANET);
+
+        //Act
         Planet sut = planetService.create(PLANET);
 
+        //Assert
         assertThat(sut).isEqualTo(PLANET);
     }
     
