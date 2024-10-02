@@ -11,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 
 @RestController
@@ -25,5 +28,12 @@ public class PlanetController {
         Planet planetCreated = planetService.create(planet);
         return ResponseEntity.status(HttpStatus.CREATED).body(planetCreated); 
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Planet> get(@PathVariable("id") Long id) {
+        return planetService.get(id).map(planet -> ResponseEntity.ok(planet))
+            .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    
     
 }
