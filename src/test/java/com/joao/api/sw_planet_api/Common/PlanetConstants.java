@@ -4,5 +4,6 @@ import com.joao.api.sw_planet_api.Domain.Planet;
 
 public class PlanetConstants {
     public static final Planet PLANET = new Planet("Mars","Hot", "Unknown");
+    public static final Planet INVALID_PLANET = new Planet("","", "");
     
 }
