@@ -64,5 +64,15 @@ public class PlanetServiceTest {
         assertThat(sut.get()).isEqualTo(PLANET);
 
     }
+
+    @Test
+    public void getPlanet_byUnexistingId_ReturnsEmpty(){
+        when(planetRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Optional<Planet> sut = planetService.get(1L);
+
+        assertThat(sut).isEmpty();
+
+    }
     
 }
