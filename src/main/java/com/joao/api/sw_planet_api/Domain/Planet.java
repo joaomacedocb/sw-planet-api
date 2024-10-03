@@ -60,6 +60,4 @@ public class Planet {
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(obj, this);
     }
-
-    
 }
