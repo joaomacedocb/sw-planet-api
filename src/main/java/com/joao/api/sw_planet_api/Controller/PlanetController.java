@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.joao.Service.PlanetService;
 import com.joao.api.sw_planet_api.Domain.Planet;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -41,5 +45,13 @@ public class PlanetController {
         return planetService.getByName(name).map(planet -> ResponseEntity.ok(planet))
             .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping
+    public ResponseEntity<List<Planet>> list(@RequestParam(required = false) String terrain,
+        @RequestParam(required = false) String climate) {
+        List<Planet> planets = planetService.list(terrain, climate);
+        return ResponseEntity.ok(planets);
+    }
+    
     
 }

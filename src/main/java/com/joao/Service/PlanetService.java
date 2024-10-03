@@ -1,7 +1,9 @@
 package com.joao.Service;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.joao.api.sw_planet_api.Domain.Planet;
@@ -30,4 +32,8 @@ public class PlanetService {
         return planetRepository.findByName(name);
     }
 
+    public List<Planet> list(String terrain, String climate) {
+        Example<Planet> query = QueryBuilder.makeQuery(new Planet(climate, terrain));
+        return planetRepository.findAll(query);
+    }
 }
