@@ -28,8 +28,7 @@ public class Planet {
     public Planet() {
     }
 
-    public Planet(String climate2, String terrain2) {
-        //TODO Auto-generated constructor stub
+    public Planet(String climate, String terrain) {
     }
 
     public Long getId() {
