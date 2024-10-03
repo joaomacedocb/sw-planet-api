@@ -31,27 +31,19 @@ public class PlanetServiceTest {
     //operacao_estado_returno
     @Test
     public void createPlanet_WithValidData_ReturnsPlanet() {
-
         //Arrange
         when(planetRepository.save(PLANET)).thenReturn(PLANET);
-
         //Act
         Planet sut = planetService.create(PLANET);
-
         //Assert
         assertThat(sut).isEqualTo(PLANET);
     }
 
     @Test
     public void createPlanet_WithInvalidData_ThrowsException() {
-
-        //arrange
         when(planetRepository.save(INVALID_PLANET)).thenThrow(RuntimeException.class);
 
-        //assert
-        assertThatThrownBy(() -> planetService.create(INVALID_PLANET)).isInstanceOf(RuntimeException.class);
-
-        
+        assertThatThrownBy(() -> planetService.create(INVALID_PLANET)).isInstanceOf(RuntimeException.class); 
     }
 
     @Test
@@ -62,7 +54,6 @@ public class PlanetServiceTest {
 
         assertThat(sut).isNotEmpty();
         assertThat(sut.get()).isEqualTo(PLANET);
-
     }
 
     @Test
@@ -72,7 +63,25 @@ public class PlanetServiceTest {
         Optional<Planet> sut = planetService.get(1L);
 
         assertThat(sut).isEmpty();
-
     }
-    
+
+    @Test
+    public void getPlanet_ByExistingName_ReturnsPlanet(){
+        when(planetRepository.findByName(PLANET.getName())).thenReturn(Optional.of(PLANET));
+
+        Optional<Planet> sut = planetService.getByName(PLANET.getName());
+
+        assertThat(sut).isNotEmpty();
+        assertThat(sut.get()).isEqualTo(PLANET);
+    }
+
+    @Test
+    public void getPlanet_ByUnexistingName_ReturnsEmpty(){
+        final String name = "Unexisting Name";
+        when(planetRepository.findByName(name)).thenReturn(Optional.empty());
+
+        Optional<Planet> sut = planetService.getByName(name);
+
+        assertThat(sut).isEmpty();
+    }
 }
