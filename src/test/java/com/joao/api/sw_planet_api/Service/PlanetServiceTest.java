@@ -1,8 +1,10 @@
 package com.joao.api.sw_planet_api.Service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -116,6 +118,18 @@ public class PlanetServiceTest {
         List<Planet> sut = planetService.list(PLANET.getClimate(), PLANET.getTerrain());
 
         assertThat(sut).isEmpty();
+    }
+
+    @Test
+    public void delete_PlanetWithExistingId_DoesNotThrowAnyException (){
+        assertThatCode(() -> planetService.remove(1L)).doesNotThrowAnyException();
+    }
+
+    @Test
+    public void delete_PlanetWithUnexistingId_ThrowAnyException (){
+        doThrow(new RuntimeException()).when(planetRepository).deleteById(99L);
+
+        assertThatThrownBy(() -> planetService.remove(99L)).isInstanceOf(RuntimeException.class);
     }
 
 
